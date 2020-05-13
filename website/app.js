@@ -20,19 +20,16 @@ function performAction(e){
 
 /* Function to GET Web API Data*/
 const getWeather = async (baseURL, zipQuery, zipCode, apiKey) => {
-    console.log(baseURL + zipQuery + zipCode + apiKey);
     const res = await fetch(baseURL + zipQuery + zipCode + apiKey)
     .then(function(data){
         return data.json();
     })
     .then(function(data){
-        console.log(data);
         newRequest = {
             temperature: Math.round(data.main.temp - kelvin),
             date: newDate,
             userResponse: document.getElementById('feelings').value
         };
-        console.log(newRequest);
         postData('/add', newRequest);
         updateUI();
     });
@@ -62,10 +59,10 @@ const updateUI = async () => {
     const request = await fetch('/all');
     try {
         const allData = await request.json();
-        document.getElementById('date').innerText = allData[0].date;
-        document.getElementById('temp').innerText = allData[0].temperature;
-        document.getElementById('content').innerText = allData[0].content;
-    } catch {
-        console.log('error', error)
+        document.getElementById('date').innerText = `Date: ${allData.date}`;
+        document.getElementById('temp').innerText = `Temperature: ${allData.temperature}`;
+        document.getElementById('content').innerText = `User Input: ${allData.content}`;
+    } catch(error) {
+        console.log('error', error);
     }
 }

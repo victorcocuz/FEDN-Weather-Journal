@@ -33,11 +33,12 @@ app.get("/all", sendData);
 
 // Callback function to complete GET '/all'
 function sendData (request, response) {
-    response.send(data);
+    response.send(latestData);
 }
 
 // Post Route
 const data = [];
+let latestData = {};
 
 app.post("/add", postData);
 
@@ -48,6 +49,7 @@ function postData (request, response) {
         content: request.body.userResponse
     }
     data.push(newEntry);
+    latestData = newEntry;
     console.log(data);
     response.send(data);
 }
